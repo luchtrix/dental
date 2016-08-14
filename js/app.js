@@ -48,13 +48,15 @@ $(".zonas").click(function(){
 app.controller('pacienteController', function($scope, $http){
     $scope.paciente = JSON.parse(localStorage.getItem("paciente"));
     $scope.pacientes = JSON.parse(localStorage.getItem("pacientes_guardados"));
+    
     // ------------------ Tomando la foto ----------------------------------------------
     //var URI = "";//va a ser global....es la uri de la foto que se toma con la camara...esta en base_64
     var URI = "img/dientes.jpg";//va a ser global....es la uri de la foto que se toma con la camara...esta en base_64
-    //var URI_PAN1 = "";
-    //var URI_PAN2 = "";
-    //$scope.hacerFoto = function(){
-    $scope.hacerFoto = function(action){
+    var URI_PAN1 = "";
+    var URI_PAN2 = "";
+    
+    $scope.hacerFoto = function(){
+    //$scope.hacerFoto = function(action){
         /*if(action == 1){//Perfil
             navigator.camera.getPicture(tomarFoto, onFail, { quality: 50, destinationType: Camera.DestinationType.DATA_URL });
         }else if(action == 2){//Panoramica 1
@@ -64,6 +66,17 @@ app.controller('pacienteController', function($scope, $http){
         }*/    
         navigator.camera.getPicture(tomarFoto, onFail, { quality: 50, destinationType: Camera.DestinationType.DATA_URL });
     }
+    
+    //Son de pruebas estos....... -------------------------
+    $scope.panoramica_1 = function(){
+        navigator.camera.getPicture(tomarPan1, onFail, { quality: 50, destinationType: Camera.DestinationType.DATA_URL });
+    }
+
+    $scope.panoramica_2 = function(){
+        navigator.camera.getPicture(tomarPan2, onFail, { quality: 50, destinationType: Camera.DestinationType.DATA_URL });
+    }
+    //Pruebas FIN -----------------------------------------
+    
     //Tomar Foto de Perfil
     function tomarFoto(imageURI){//Manda como parametro la foto en base_64....
         var image = document.getElementById('perfil');
@@ -71,7 +84,7 @@ app.controller('pacienteController', function($scope, $http){
         image.src = URI;
     }
     //Tomar foto panoramica 1
-    /*function tomarPan1(imageURI) {
+    function tomarPan1(imageURI) {
         //alert("imageUri "+imageURI)
         var panoramica = document.getElementById('panoramicaI');
         URI_PAN1 = "data:image/png;base64," + imageURI;
@@ -83,12 +96,12 @@ app.controller('pacienteController', function($scope, $http){
         var panoramica = document.getElementById('panoramicaII');
         URI_PAN2 = "data:image/png;base64," + imageURI;
         panoramica.src = URI_PAN2;
-    }*/
+    }
     function onFail(message) {
         alert('Falló a causa de: ' + message);
     }
     //Guardando Temporalmente las fotos panoramicas, tanto los nombres como los objetos....
-    /*$scope.savePanoramicas = function(){
+    $scope.savePanoramicas = function(){
         $scope.paciente.RPA1TEMP = URI_PAN1;    
         $scope.paciente.RPA2TEMP = URI_PAN2;
         $scope.paciente.RPA1 = "panoramica1.png";
@@ -100,8 +113,9 @@ app.controller('pacienteController', function($scope, $http){
                     color: 'lightgreen'
                 }
             });
-    }*/
+    }
     //--------------------- Tomando la foto y guardando fotos local ------------------------------------------------
+    
     /* Cambie esta parte para que guarde la información en el telefono sin enviarla al servidor */
     $scope.nuevoPaciente = function(){
         //$scope.pacienteN.RSEX = $("#genero").val();
@@ -150,10 +164,10 @@ app.controller('pacienteController', function($scope, $http){
         
         //Fotos panoramicas de la boca del paciente 1 y 2***************************** NUEVO ************
         //agregando la uri al objeto de las panoramicas .... TEMPORAL
-        //$scope.pacienteN.RPA1TEMP = "";
-        //$scope.pacienteN.RPA2TEMP = "";
-        //$scope.pacienteN.RPA1 = "";
-        //$scope.pacienteN.RPA2 = "";
+        $scope.pacienteN.RPA1TEMP = "";
+        $scope.pacienteN.RPA2TEMP = "";
+        $scope.pacienteN.RPA1 = "";
+        $scope.pacienteN.RPA2 = "";
         //--------------- FIN Fotos Panoramicas -----------------------------------
         
         var pacientes_guardados = []
