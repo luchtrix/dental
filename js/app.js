@@ -5,7 +5,7 @@ var application = new Framework7({
 //var socket = io.connect('http://192.168.43.135:3000');
 // Controlador de login
 //var urlServidor = "http://159.203.128.165:3000/";
-var urlServidor = "http://127.0.0.1:3000/";
+var urlServidor = "http://127.0.0.1:8080/";
 // Elección de la zona individual a editar
 var buttons = [
     {
