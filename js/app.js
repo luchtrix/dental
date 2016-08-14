@@ -109,7 +109,7 @@ app.controller('pacienteController', function($scope, $http){
         
         alert("mi curp "+$scope.paciente.RCURP);
         var pacientes_guardados = [];
-        var 
+        //var 
         if (localStorage.getItem("pacientes_guardados") != null){
             pacientes_guardados = JSON.parse(localStorage.getItem("pacientes_guardados"));
             for(i in pacientes_guardados) {
