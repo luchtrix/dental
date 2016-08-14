@@ -52,8 +52,8 @@ app.controller('pacienteController', function($scope, $http){
     // ------------------ Tomando la foto ----------------------------------------------
     //var URI = "";//va a ser global....es la uri de la foto que se toma con la camara...esta en base_64
     var URI = "img/dientes.jpg";//va a ser global....es la uri de la foto que se toma con la camara...esta en base_64
-    var URI_PAN1 = "";
-    var URI_PAN2 = "";
+    var URI_PAN1 = "img/dientes.jpg";
+    var URI_PAN2 = "img/dientes.jpg";
     
     $scope.hacerFoto = function(){
     //$scope.hacerFoto = function(action){
@@ -87,14 +87,14 @@ app.controller('pacienteController', function($scope, $http){
     }
     //Tomar foto panoramica 1
     function tomarPan1(imageURI) {
-        //alert("imageUri "+imageURI)
+        alert("imageUri en 1 "+imageURI)
         var panoramica = document.getElementById('panoramicaI');
         URI_PAN1 = "data:image/png;base64," + imageURI;
         panoramica.src = URI_PAN1;
     }
     //tomar foto panoramica 2
     function tomarPan2(imageURI) {
-        //alert("imageUri "+imageURI)
+        alert("imageUri en 2 "+imageURI)
         var panoramica = document.getElementById('panoramicaII');
         URI_PAN2 = "data:image/png;base64," + imageURI;
         panoramica.src = URI_PAN2;
@@ -104,7 +104,43 @@ app.controller('pacienteController', function($scope, $http){
     }
     //Guardando Temporalmente las fotos panoramicas, tanto los nombres como los objetos....
     $scope.savePanoramicas = function(){
-        $scope.paciente.RPA1TEMP = URI_PAN1;    
+        alert("verificando en 1: "+URI_PAN1);
+        alert("verificando en 2: "+URI_PAN2);
+        
+        alert("mi curp "+$scope.paciente.RCURP);
+        var pacientes_guardados = [];
+        if (localStorage.getItem("pacientes_guardados") != null){
+            pacientes_guardados = JSON.parse(localStorage.getItem("pacientes_guardados"));
+            for(i in pacientes_guardados) {
+                if(pacientes_guardados[i].RCURP == $scope.paciente.RCURP){
+                    alert("Coincide la curp")
+                    pacientes_guardados[i].RPA1TEMP = URI_PAN1;    
+                    pacientes_guardados[i].RPA2TEMP = URI_PAN2;
+                    pacientes_guardados[i].RPA1 = "panoramica1.png";
+                    pacientes_guardados[i].RPA2 = "panoramica2.png";
+                }
+            }
+            localStorage.setItem("pacientes_guardados", JSON.stringify(pacientes_guardados));
+            localStorage.setItem("paciente", JSON.stringify($scope.pacienteN));
+            alert("tiene sesiones ==> "+pacientes_guardados.length);
+            application.addNotification({
+                message: 'Información de las panoramicas guardadas',
+                button: {
+                    text: 'Cerrar',
+                    color: 'lightgreen'
+                }
+            });
+        }else{
+            application.addNotification({
+                message: 'No se pudo guardar la Información de las panoramicas',
+                button: {
+                    text: 'Cerrar',
+                    color: 'red'
+                }
+            });
+        }
+        //---------------------------------------
+        /*$scope.paciente.RPA1TEMP = URI_PAN1;    
         $scope.paciente.RPA2TEMP = URI_PAN2;
         $scope.paciente.RPA1 = "panoramica1.png";
         $scope.paciente.RPA2 = "panoramica2.png";
@@ -114,7 +150,7 @@ app.controller('pacienteController', function($scope, $http){
                     text: 'Cerrar',
                     color: 'lightgreen'
                 }
-            });
+            });*/
     }
     //--------------------- Tomando la foto y guardando fotos local ------------------------------------------------
     
