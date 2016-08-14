@@ -69,10 +69,12 @@ app.controller('pacienteController', function($scope, $http){
     
     //Son de pruebas estos....... -------------------------
     $scope.panoramica_1 = function(){
+        alert("panoramica 1")
         navigator.camera.getPicture(tomarPan1, onFail, { quality: 50, destinationType: Camera.DestinationType.DATA_URL });
     }
 
     $scope.panoramica_2 = function(){
+        alert("panoramica 2")
         navigator.camera.getPicture(tomarPan2, onFail, { quality: 50, destinationType: Camera.DestinationType.DATA_URL });
     }
     //Pruebas FIN -----------------------------------------
