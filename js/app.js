@@ -69,12 +69,12 @@ app.controller('pacienteController', function($scope, $http){
     
     //Son de pruebas estos....... -------------------------
     $scope.panoramica_1 = function(){
-        alert("panoramica 1")
+        //alert("panoramica 1")
         navigator.camera.getPicture(tomarPan1, onFail, { quality: 50, destinationType: Camera.DestinationType.DATA_URL });
     }
 
     $scope.panoramica_2 = function(){
-        alert("panoramica 2")
+        //alert("panoramica 2")
         navigator.camera.getPicture(tomarPan2, onFail, { quality: 50, destinationType: Camera.DestinationType.DATA_URL });
     }
     //Pruebas FIN -----------------------------------------
@@ -107,14 +107,14 @@ app.controller('pacienteController', function($scope, $http){
         //alert("verificando en 1: "+URI_PAN1);
         //alert("verificando en 2: "+URI_PAN2);
         
-        alert("mi curp "+$scope.paciente.RCURP);
+        //alert("mi curp "+$scope.paciente.RCURP);
         var pacientes_guardados = [];
         //var 
         if (localStorage.getItem("pacientes_guardados") != null){
             pacientes_guardados = JSON.parse(localStorage.getItem("pacientes_guardados"));
             for(i in pacientes_guardados) {
                 if(pacientes_guardados[i].RCURP == $scope.paciente.RCURP){
-                    alert("Coincide la curp")
+                    //alert("Coincide la curp")
                     pacientes_guardados[i].RPA1TEMP = URI_PAN1;    
                     pacientes_guardados[i].RPA2TEMP = URI_PAN2;
                     pacientes_guardados[i].RPA1 = "panoramica1.png";
@@ -123,7 +123,7 @@ app.controller('pacienteController', function($scope, $http){
                 }
             }
             localStorage.setItem("pacientes_guardados", JSON.stringify(pacientes_guardados));
-            alert("tiene sesiones ==> "+pacientes_guardados.length);
+            //alert("tiene sesiones ==> "+pacientes_guardados.length);
             application.addNotification({
                 message: 'Información de las panoramicas guardadas',
                 button: {
