@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html ng-app='MainApp'>
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta http-equiv="Content-Security-Policy" content="default-src *; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' 'unsafe-eval'">
+		<meta name="msapplication-tap-highlight" content="no" />
+		<meta charset="utf-8" >
+		<title>PDE</title>
+		<link rel='stylesheet' href='../css/bootstrap.css'/>
+		<link rel='stylesheet' href='../css/styles.css'/>
+		<script type="text/javascript" src="../js/jquery-2.0.0.min.js"></script>
+		<script type="text/javascript" src="../js/angular.min.js"></script>
+		<script type="text/javascript" src="../js/bootstrap.js"></script>
+		<script type="text/javascript" src="../js/easeljs-0.8.2.min.js"></script>
+		<script type="text/javascript" src="../js/app.js"></script>
+</head>
+<body>
+<br>
+<div class="container" ng-controller="pacienteController">
+	<table class="table table-hover">
+    <thead>
+      <tr>
+        <th>CURP</th>
+        <th>Nombre Completo</th>
+        <th>Sexo</th>
+        <th>Ver</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="p in pacientes">
+        <td>{{p.RCURP}}</td>
+        <td>{{p.RNOM}} {{p.RAPP}} {{p.RAPM}}</td>
+        <td>{{p.RSEX}}</td>
+        <td><a href="" ng-click="verRegistros(p._id)" class="btn btn-primary">Ver Paciente</a></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+</body>
+</html>		

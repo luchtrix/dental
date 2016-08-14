@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html ng-app='MainApp'>
+  <head>
+    <!-- Required meta tags-->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <!-- Your app title -->
+    <title>My App</title>
+    <!-- Path to Framework7 Library CSS, iOS Theme -->
+    <link rel="stylesheet" href="../css/framework7.material.min.css">
+    <!-- Path to Framework7 color related styles, material Theme -->
+    <link rel="stylesheet" href="../css/framework7.material.colors.min.css">
+    <link rel="stylesheet" href="../css/font-awesome.css">
+    <!-- Path to your custom app styles-->
+    <!--<link rel='stylesheet' href='../css/bootstrap.css'/>-->
+    <link rel="stylesheet" href="../css/styles.css">
+  </head>
+  <body class="layout-null layout-white theme-bluegray" ng-controller="mainController" onload="onLoad()">
+    <!-- Views -->
+    <div class="views tabs toolbar-fixed">
+      <!-- Your main view, should have "view-main" class -->
+      <div class="view view-main">
+        <!-- Pages container, because we use fixed navbar and toolbar, it has additional appropriate classes-->
+        <div class="pages navbar-fixed">
+          <!-- Page, "data-page" contains page name -->
+          <div data-page="index" class="page">
+ 
+            <!-- Top Navbar. In Material theme it should be inside of the page-->
+            <div class="navbar">
+              <div class="navbar-inner">
+              	<div class="left">
+  		            <a href="#" ng-click="go('info.html');" class="link">
+  		                <i class="fa fa-chevron-left"></i>
+  		                <span>Atras</span>
+  		            </a>
+  		          </div>
+                <div class="right">
+                <a href="#" ng-click="Undo();" class="link">
+                      <span>Deshacer</span>
+                      <i class="fa fa-undo"></i>
+                  </a>
+                  <a href="#" ng-click="Save();" class="link">
+                      <span>Guardar</span>
+                      <i class="fa fa-save"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+ 
+            <!-- Scrollable page content -->
+            <div class="page-content" style="overflow: auto;">
+              <div class="row">
+                <div class="col-100 tablet-100">
+                  <h1 id="nombre_paciente">Paciente: <span style="color:teal;">{{paciente.RNOM}} {{paciente.RAPP}} {{paciente.RAPM}}</span></h1>
+                </div>
+              </div>
+              <div class="line"></div>
+              <input type="hidden" id="idP" value="" /> 
+              <input type="hidden" id="isOnline" value="" /> 
+              <div class="row">
+                <div class="col-50">
+                  <h1>Zona Superior Izquierda</h1>
+                  <canvas height="120" width="648" id='SI' style="background-color:#e8eaf6"></canvas>
+                </div>
+                <div class="col-50">
+                  <h1>Zona Superior Derecha</h1>
+                  <canvas height="120" width="648" id='SD' style="background-color:#e8eaf6"></canvas>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-50">
+                  <canvas height="120" width="648" id='II' style="background-color:#e8eaf6"></canvas>
+                  <h1>Zona Inferior Izquierda</h1>
+                </div>
+                <div class="col-50">
+                  <canvas height="120" width="648" id='ID' style="background-color:#e8eaf6"></canvas>
+                  <h1>Zona Inferior Derecha</h1>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript" src="../js/jquery-2.0.0.min.js"></script>
+	  <script type="text/javascript" src="../js/angular.min.js"></script>
+    <!-- Path to Framework7 Library JS-->
+    <script type="text/javascript" src="../js/framework7.min.js"></script>
+    <script type="text/javascript" src="../js/easeljs-0.8.2.min.js"></script>
+    <!-- Path to your app js-->
+    <!--<script type="text/javascript" src="../js/bootstrap.js"></script>-->
+    <script type="text/javascript" src="../js/diagnostico_total.js"></script>
+    <script type="text/javascript" src="../cordova.js"></script>
+    <script type="text/javascript">
+
+      function onLoad() {
+          document.addEventListener("deviceready", onDeviceReady, false);
+      }
+
+      function onDeviceReady() {
+        document.addEventListener("backbutton", function(e){
+          window.location.href = 'info.html';
+        }, false);
+          document.addEventListener("offline", onOffline, false);
+          document.addEventListener("online", onOnline, false);
+      }
+      // Handle the offline event
+      //
+      function onOffline() {
+        document.getElementById("isOnline").value = 0;
+      }
+      function onOnline() {
+        document.getElementById("isOnline").value = 1;
+      }
+    </script>
+
+  </body>
+</html> 

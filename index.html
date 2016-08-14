@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html ng-app='MainApp'>
+  <head>
+    <!-- Required meta tags-->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <!-- Your app title -->
+    <title>My App</title>
+    <!-- Path to Framework7 Library CSS, iOS Theme -->
+    <link rel="stylesheet" href="css/framework7.material.min.css">
+    <!-- Path to Framework7 color related styles, material Theme -->
+    <link rel="stylesheet" href="css/framework7.material.colors.min.css">
+    <link rel="stylesheet" href="css/font-awesome.css">
+    <!-- Path to your custom app styles-->
+    <link rel="stylesheet" href="css/styles.css">
+  </head>
+  <body class="layout-null layout-white theme-bluegray" ng-controller="pacienteController" onload="onLoad()">
+    <!-- Views -->
+    <div class="views tabs toolbar-fixed">
+      <!-- Your main view, should have "view-main" class -->
+      <div class="view view-main">
+        <!-- Pages container, because we use fixed navbar and toolbar, it has additional appropriate classes-->
+        <div class="pages navbar-fixed toolbar-fixed">
+          <!-- Page, "data-page" contains page name -->
+          <div data-page="index" class="page">
+ 
+            <!-- Top Navbar. In Material theme it should be inside of the page-->
+            <div class="navbar">
+              <div class="navbar-inner">
+                <div class="center">DENTAL</div>
+              </div>
+            </div>
+ 
+            <!-- Bottom Toolbar. In Material theme it should be inside of the page-->
+            <div class="toolbar toolbar-bottom tabbar tabbar-labels theme-bluegray">
+              <div class="toolbar-inner">
+                <a href="#home" class="tab-link active">
+                  <i class="fa fa-home"></i>
+                  <span class="tabbar-label">Inicio</span>
+                </a>
+                <a href="#search" class="tab-link">
+                  <i class="fa fa-search"></i>
+                  <span class="tabbar-label">Ver Registros</span>
+                </a>
+              </div>
+            </div>
+ 
+            <!-- Scrollable page content -->
+            <div class="page-content messages-content">
+              <div class="tabs-swipeable-wrap">
+                <div class="tabs">
+                  <div class="tab active" id="home">
+                    <div class="row">
+                      <div class="col-100 tablet-100">
+                        <h1>BIENVENIDO A DENTAPP</h1>
+                        <!-- Agregue este boton que se habilita cuando tienes información alamcenada en el telefono -->
+                        <a id="save" href="#" ng-click="Save()" class="center button button-big button-fill button-raised color-teal" style="display: none;">Guardar</a>
+                        <div id="online"></div>
+                      </div>
+                    </div>
+                    <div class="row" id="cargando" style="display: none;">
+                      <div class="col-100">
+                        Espere un momento...<br>
+                        <span style="width:42px; height:42px" class="preloader"></span>
+                      </div>
+                    </div>
+                    <!-- Hasta aca -->
+                    <div class="row">
+                      <div class="col-10"></div>
+                      <div class="col-80">
+                        <div class="content-block-title">Información de nuevo paciente</div>
+                        <div class="list-block">
+                          <form role="form" ng-submit="nuevoPaciente()">
+                            <ul>
+                            <!--  FOTO DE PERFIL-->
+                              <li>
+                                  <div class="col-25"></div>
+                                  <img id="perfil" ng-click="hacerFoto(1)" src="" width="100px" height="100px">
+                                  <!--<div class="col-30">
+                                    <button type="button" ng-click="tomarFoto()" class="button button-fill button-raised color-blue">Foto</button>
+                                  </div>-->
+                              </li>
+                              <!--li>
+                                <div class="col-100">
+                                  <a class="button button-fill button-raised color-blue" ng-click="go('vistas/panoramicas.html')">Tomar panorámica</a>
+                                </div>
+                              </li-->
+                              <!-- Fin para la foto del perfil -->
+                              <!-- Text inputs -->
+                              <li>
+                                <div class="item-content">
+                                    <div class="item-media"><i class="fa fa-book"></i></div>
+                                    <div class="item-inner">
+                                      <div class="item-input">
+                                          <input tabindex="1" autofocus="" type="text" placeholder="CURP" id="curp" ng-model="pacienteN.RCURP" required>
+                                      </div>
+                                    </div>
+                                </div>
+                              </li>
+                              <!-- Text inputs -->
+                              <li>
+                                <div class="item-content">
+                                    <div class="item-media"><i class="fa fa-user"></i></div>
+                                    <div class="item-inner">
+                                      <div class="item-input">
+                                          <input tabindex="2" type="text" placeholder="Nombre(s)" id="nombre" ng-model="pacienteN.RNOM" required>
+                                      </div>
+                                    </div>
+                                </div>
+                              </li>
+                              <li>
+                                <div class="item-content">
+                                    <div class="item-media"><i class="fa fa-user"></i></div>
+                                    <div class="item-inner">
+                                      <div class="item-input">
+                                          <input tabindex="3" type="text" placeholder="Apellido Paterno" id="ap" ng-model="pacienteN.RAPP" required>
+                                      </div>
+                                    </div>
+                                </div>
+                              </li>
+                              <li>
+                                <div class="item-content">
+                                    <div class="item-media"><i class="fa fa-user"></i></div>
+                                    <div class="item-inner">
+                                      <div class="item-input">
+                                          <input tabindex="4" type="text" placeholder="Apellido Materno" iid="am" ng-model="pacienteN.RAPM" required>
+                                      </div>
+                                    </div>
+                                </div>
+                              </li>
+                              <!--<li>
+                                <div class="item-content">
+                                  <div class="item-media"><i class="fa fa-user"></i></div>
+                                  <div class="item-inner">
+                                    <div class="item-input">
+                                      <input type="text" placeholder="Fecha de Nacimiento" id="calendar-default" ng-model="pacienteN.RFEN">
+                                    </div>
+                                  </div>
+                                </div>
+                              </li>
+
+                              <li>-->
+                                <!--div class="" style="text-align: left;color: gray;">Seleccione el sexo</div-->
+                                <!--<div class="item-content">
+                                    <div class="item-media"><i class="fa fa-users"></i></div>
+                                      <div class="item-inner">
+                                      <div class="item-input">
+                                          <select id="genero" required>
+                                          <option value="" disabled="true" selected="true"> Seleccione el Sexo</option>
+                                            <option value="H">Hombre</option>
+                                            <option value="M">Mujer</option>
+                                          </select>
+                                      </div>
+                                    </div>
+                                </div>
+                              </li>-->
+                              <li>
+                                
+                              </li>
+                            </ul>
+                            <br>
+                            <div class="row">
+                              <div class="col-45"></div>
+                              <div class="col-30">
+                                <button type="submit" class="button button-fill button-raised color-blue">Registrar</button>
+                              </div>
+                              <div class="col-25"></div>
+                            </div>
+                          </form>
+                        </div>
+                      </div>
+                      <div class="col-10"></div>
+                    </div>
+                  </div>
+                  <div class="tab" id="search">
+                    <h1><i class="fa fa-user"></i> Pacientes</h1><br>
+                     <!-- Search Bar -->
+                    <form data-search-list=".list-block-search" data-search-in=".item-title" class="searchbar searchbar-init">
+                      <div class="searchbar-input">
+                          <input type="search" placeholder="Buscar Paciente..."><a href="#" class="searchbar-clear"></a>
+                      </div><a href="#" class="searchbar-cancel">Cancelar</a>
+                    </form>
+                     
+                    <!-- Search Bar overlay -->
+                    <div class="searchbar-overlay"></div>
+                     
+                    <div class="page-content" style="margin-top:-90px;">
+                      <!-- This block will be displayed if nothing found -->
+                      <div class="content-block searchbar-not-found">
+                        <div class="content-block-inner">Paciente No Encontrado</div>
+                      </div>
+                     
+                      <!-- This block will be displayed if anything found, and this list block is used a searbar target -->
+                      <div class="list-block list-block-search searchbar-found">
+                        <ul ng-repeat="p in pacientes">
+                          <a href="#" ng-click="change(p)"><li class="item-content">
+                            <div class="item-inner">
+                              <div class="item-title">
+                                <i class="fa fa-user"></i> {{p.RNOM}} {{p.RAPP}} {{p.RAPM}}
+                              </div>
+                            </div>
+                          </li></a>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript" src="js/jquery-2.0.0.min.js"></script>
+  <script type="text/javascript" src="js/angular.min.js"></script>
+    <!-- Path to Framework7 Library JS-->
+    <script type="text/javascript" src="js/framework7.min.js"></script>
+    <!-- Path to your app js-->
+    <script type="text/javascript" src="js/app.js"></script>
+    <script type="text/javascript" src="js/my-app.js"></script>
+    <script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript" charset="utf-8">
+    /* Aca tambien le agregue unas cosas: en el onLoad le puse que oculte el boton de arriba */
+    function onLoad() {
+      if(localStorage.getItem("sesiones_guardadas") != null){
+        $("#save").css("display", "block");
+      }else{
+        $("#save").css("display", "none");
+      }
+      document.addEventListener("deviceready", onDeviceReady, false);
+    }
+
+    // Cordova is loaded and it is now safe to make calls Cordova methods
+    //
+    function onDeviceReady() {
+      /* Le agregue esto para cuando presionas el boton de atras de la tablet lo tiene en todos los html */
+      document.addEventListener("backbutton", function(e){
+        navigator.app.exitApp();
+      }, false);
+
+        document.addEventListener("offline", onOffline, false);
+        document.addEventListener("online", onOnline, false);
+    }
+
+    // Handle the offline event
+    //
+    function onOffline() {
+      //alert("offline")
+      document.getElementById("online").innerHTML = "<div class='alert alert-danger'>Esperando una conexión de red ...</div>";
+    }
+    function onOnline() {
+      //alert("online")
+      document.getElementById("online").innerHTML = "";
+    }
+
+    </script>
+  </body>
+</html>
